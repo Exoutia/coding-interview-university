@@ -79,14 +79,20 @@ class Tree:
     
     def dfs(self):
         res = []
-        stack = []
-        visited = {}
-        pass
+        def helper(node):
+            if node is None:
+                return
+            res.append(node)
+            helper(node.left)
+            helper(node.right)
+        helper(self.root)
+        return res
 
 
 if __name__ == "__main__":
     x = Tree.list_to_tree([1, 2, 3, 4, 5, 6, 7, 8, 9, 10])
     print(x.bfs())
+    print(x.dfs())
     print(x.inorder_print())
     print(x.postorder_print())
     print(x.preorder_print())
