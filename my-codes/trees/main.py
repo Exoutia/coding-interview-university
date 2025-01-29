@@ -1,4 +1,4 @@
-from collections import deque
+from collections import defaultdict, deque
 from typing import Self
 
 
@@ -69,19 +69,40 @@ class Tree:
         res = []
         q = deque([self.root])
         while q:
+            node = q.popleft()
+            if node:
+                res.append(node.val)
+                q.append(node.left)
+                q.append(node.right)
+        return res
+
+    def __str__(self) -> str:
+        res = list()
+        q = deque([self.root])
+        while q:
+            lis = []
             for _ in range(len(q)):
                 node = q.popleft()
+                lis.append(str(node))
                 if node:
-                    res.append(node.val)
                     q.append(node.left)
                     q.append(node.right)
-        return res
-    
+            res.append(' | '.join(lis))
+        return '\n'.join(res)
+        
+
     def dfs(self):
+        root = self.root
         res = []
-        stack = []
-        visited = {}
-        pass
+        def helper(node):
+            if node is None:
+                return
+            res.append(node)
+            helper(node.left)
+            helper(node.right)
+        helper(root)
+        return res
+            
 
 
 if __name__ == "__main__":
